@@ -144,6 +144,7 @@ namespace Pascual.Christian.PPLabII
             // 
             // CBoxFiltro
             // 
+            this.CBoxFiltro.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBoxFiltro.FormattingEnabled = true;
             this.CBoxFiltro.Location = new System.Drawing.Point(424, 59);
             this.CBoxFiltro.Name = "CBoxFiltro";
