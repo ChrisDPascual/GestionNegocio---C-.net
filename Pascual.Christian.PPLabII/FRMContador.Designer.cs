@@ -29,7 +29,7 @@ namespace Pascual.Christian.PPLabII
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.RTBoxPantalla = new System.Windows.Forms.RichTextBox();
             this.lbCantidadVentas = new System.Windows.Forms.Label();
             this.CBoxCategorias = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,14 +41,14 @@ namespace Pascual.Christian.PPLabII
             this.TBoxVentasTotales = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // richTextBox1
+            // RTBoxPantalla
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(143, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(395, 234);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.RTBoxPantalla.Location = new System.Drawing.Point(143, 12);
+            this.RTBoxPantalla.Name = "RTBoxPantalla";
+            this.RTBoxPantalla.ReadOnly = true;
+            this.RTBoxPantalla.Size = new System.Drawing.Size(395, 234);
+            this.RTBoxPantalla.TabIndex = 0;
+            this.RTBoxPantalla.Text = "";
             // 
             // lbCantidadVentas
             // 
@@ -94,6 +94,7 @@ namespace Pascual.Christian.PPLabII
             this.button2.TabIndex = 6;
             this.button2.Text = "promedio por categoria";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // BTSalir
             // 
@@ -146,7 +147,7 @@ namespace Pascual.Christian.PPLabII
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CBoxCategorias);
             this.Controls.Add(this.lbCantidadVentas);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.RTBoxPantalla);
             this.Name = "FRMContador";
             this.Text = "Contador";
             this.ResumeLayout(false);
@@ -156,7 +157,7 @@ namespace Pascual.Christian.PPLabII
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox RTBoxPantalla;
         private System.Windows.Forms.Label lbCantidadVentas;
         private System.Windows.Forms.ComboBox CBoxCategorias;
         private System.Windows.Forms.Label label1;

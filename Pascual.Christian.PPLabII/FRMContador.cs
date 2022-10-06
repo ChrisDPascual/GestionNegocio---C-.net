@@ -33,5 +33,13 @@ namespace Pascual.Christian.PPLabII
         {
             Dispose();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            float promedio;
+
+            promedio = this.duenio.promedioPorCategoria(this.duenio, this.CBoxCategorias.Text);
+            this.RTBoxPantalla.Text = Convert.ToString(promedio);
+        }
     }
 }

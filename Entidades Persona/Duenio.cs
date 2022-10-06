@@ -1214,5 +1214,24 @@ namespace Entidades_Organizacion
 
             return acumulador;
         }
+
+        public float promedioPorCategoria(Duenio d, string categoria) 
+        {
+            float promedio;
+            float precio;
+            float acumulador= 0;
+
+            foreach(var item in d.listaDeVentas)
+            { 
+                precio = item.GetSetPrecio;
+                acumulador = acumulador + precio;
+            }
+
+            promedio = acumulador / d.listaDeVentas.Count;
+
+            return promedio;
+        }
+
+       
     }
 }

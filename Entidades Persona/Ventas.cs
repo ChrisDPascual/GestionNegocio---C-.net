@@ -11,9 +11,10 @@ namespace Entidades_Organizacion
     {
         protected int numeroFactura;
         protected float total;
+        protected int cantidad;
         public Ventas(string articulo, string categoria, float precio,int cantidad) : base()
         {
-
+            this.cantidad = cantidad;
             this.total = cantidad*precio;
         }
 
@@ -46,6 +47,12 @@ namespace Entidades_Organizacion
         {
             get {return this.numeroFactura; }
             set { this.numeroFactura = value; }
+        }
+
+        public int GetSetCantidad
+        {
+            get { return this.cantidad; }
+            set { this.cantidad = value; }
         }
 
     }
