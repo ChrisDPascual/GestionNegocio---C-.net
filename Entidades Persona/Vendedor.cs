@@ -14,7 +14,7 @@ namespace Entidades_Organizacion
         private string estado;
 
         #region "Constructores"
-        private Vendedor() : base()
+        public Vendedor() : base()
         {
         }
 
@@ -81,7 +81,7 @@ namespace Entidades_Organizacion
         {
             return Convert.ToInt32(vendedores.GetLegajo);
         }
-
+        #region "Sobrecargas"
         public static bool operator ==(int numero, Vendedor Vendedor)
         {
             bool retorno = false;
@@ -99,6 +99,228 @@ namespace Entidades_Organizacion
         {
             return !(numero == Vendedor);
         }
+        #endregion
 
+        public bool VerificarLegajo(int numeroLegajo, Duenio d)
+        {
+            bool retorno = false;
+
+            if (numeroLegajo > 0 || !(d is null))
+            {
+                foreach (var item in d.GetLista)
+                {
+                        if (numeroLegajo == item.GetLegajo)
+                        {
+                            retorno = true;
+                            break;
+                        }                
+                }
+            }
+
+            return retorno;
+        }
+
+        public string MostrarUnEmpleado(int legajo, Duenio d)
+        {
+            StringBuilder cadena = new StringBuilder();
+            int bandera = 0;
+            if (!(d is null) && legajo > 0)
+            {
+                foreach (var item in d.GetLista)
+                {
+                    if (legajo == item.GetLegajo)
+                    {
+                        cadena.Append($"Nombre: {item.GetSetNombre}\t");
+                        cadena.AppendLine($"Apellido: {item.GetSetApellido}");
+                        cadena.Append($"DNI: {item.GetSetDNI}\t");
+                        cadena.Append($"Genero: {item.GetSetGenero}\t");
+                        cadena.AppendLine($"Edad: {item.GetEdad(item.fechaNacimiento)}\t");
+                        cadena.Append($"Estado: {item.GetSetEstado}\t");
+                        cadena.Append($"Legajo: {item.GetLegajo}\t");
+                        cadena.AppendLine($"Telefono: {item.GetSetelefono}");
+                        cadena.Append($"email: {item.GetSetEmail}\t");
+                        cadena.AppendLine($"domicilio: {item.GetSetDomicilio}");
+                        cadena.Append("Inicio de actividades: " + item.GetSetInicioActividades.ToString("dd/MM/yyyy"));
+
+                        if (item.GetSetEstado == "despedido")
+                        {
+
+                            cadena.AppendLine("\tFecha de despido: " + item.GetSetFinActividades.ToString("dd/MM/yyyy\n"));
+                        }
+                        cadena.AppendLine();
+                        cadena.AppendLine();
+                        bandera = 1;
+                        break;
+                    }
+
+                }
+            }
+            if (bandera == 1)
+            {
+                return Convert.ToString(cadena);
+            }
+            else
+            {
+                return string.Empty;
+            }
+
+        }
+
+        public string MostrarEmpleados(string filtro, Duenio d)
+        {
+            StringBuilder cadena = new StringBuilder();
+            if (!(string.IsNullOrWhiteSpace(filtro) || d is null))
+            {
+                
+
+                if (filtro == "todos")
+                {
+                    foreach (var item in d.GetLista)
+                    {
+
+                            if(item.GetLegajo > 0) 
+                            {
+                                cadena.AppendLine(MostrarUnEmpleado(item.GetLegajo, d));
+                            }                  
+
+                    }
+                }
+                else 
+                {
+                    foreach (var item in d.GetLista)
+                    {
+
+                        if (item.GetSetEstado == filtro)
+                        {
+                            cadena.AppendLine(MostrarUnEmpleado(item.GetLegajo, d));
+                        }
+                    }
+                }
+            }
+
+            return Convert.ToString(cadena);
+        }
+
+        public bool ComparaDNI(Duenio d, long DNI)
+        {
+            bool retorno = false;
+            if (!(d is null) && DNI > 0)
+            {
+                foreach (var item in d.GetLista)
+                {
+                    if (item.GetSetDNI == DNI)
+                    {
+                        retorno = true;
+                        break;
+                    }
+                }
+            }
+
+            return retorno;
+        }
+
+        public string ValidarNuevoEmpleado(Duenio d, string nombre, string apellido, long DNI, string genero, DateTime fechaNac, string estado, DateTime inicioActividades)
+        {
+            string cadena = string.Empty;
+            StringBuilder Error = new StringBuilder();
+            int edad;
+
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(genero) || string.IsNullOrWhiteSpace(estado) || d is null)
+            {
+                Error.AppendLine("Complete nombre, apellido y genero");
+            }
+
+            if (!(DNI >= 999999 && DNI <= 99999999))
+            {
+                Error.AppendLine("Ingrese un DNI valido");
+            }
+            else
+            {
+                if (ComparaDNI(d,DNI))
+                {
+                    Error.AppendLine("El DNI ya se encuentra registrado");
+                }
+                
+            }
+
+            if (!(Validaciones.Validaciones.ValidarFecha(fechaNac.Day, fechaNac.Month, fechaNac.Year)))
+            {
+                Error.AppendLine("la fecha ingresada no es valida");
+            }
+            else
+            {
+                edad = d.GetEdad(fechaNac);
+                if (edad < 17)
+                {
+                    Error.AppendLine("No tiene edad suficiente para trabajar");
+                }
+            }
+
+            if (inicioActividades > DateTime.Now)
+            {
+                Error.AppendLine("No concuerda la fecha de inicio"); ;
+            }
+            cadena = Convert.ToString(Error);
+            return cadena;
+        }
+
+        public string ValidarCambioDatosEmpleado(Duenio d, string nombre, string apellido, long DNI, string genero, DateTime fechaNac, string estado)
+        {
+            string cadena = string.Empty;
+            StringBuilder Error = new StringBuilder();
+            int edad;
+
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(genero) || string.IsNullOrWhiteSpace(estado) || d is null)
+            {
+                Error.AppendLine("Complete nombre, apellido y genero");
+            }
+
+            if (!(DNI >= 999999 && DNI <= 99999999))
+            {
+                Error.AppendLine("Ingrese un DNI valido");
+            }
+            else
+            {
+                if (ComparaDNI(d, DNI) == false)
+                {
+                    Error.AppendLine("El DNI ingresado no se encuentra sociado a ningun empleado");
+                }
+
+            }
+
+            if (!(Validaciones.Validaciones.ValidarFecha(fechaNac.Day, fechaNac.Month, fechaNac.Year)))
+            {
+                Error.AppendLine("la fecha ingresada no es valida");
+            }
+            else
+            {
+                edad = d.GetEdad(fechaNac);
+                if (edad < 17)
+                {
+                    Error.AppendLine("No tiene edad suficiente para trabajar");
+                }
+            }
+
+            cadena = Convert.ToString(Error);
+            return cadena;
+        }
+
+        public Vendedor RetornarUnVendedor(Duenio d, int legajo)
+        {
+            Vendedor unVendedor = null;
+            if (!(d is null) && legajo > 0)
+            {
+                foreach (var item in d.GetLista)
+                {
+                    if (item.GetLegajo == legajo)
+                    {
+                        unVendedor = item;
+                        break;
+                    }
+                }
+            }
+
+            return unVendedor;
+        }
     }
 }

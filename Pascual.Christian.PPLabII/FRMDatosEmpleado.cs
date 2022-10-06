@@ -15,10 +15,12 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMDatosEmpleado : Form
     {
         private Duenio duenio;
+        private Vendedor vendedor;
         public FRMDatosEmpleado(Duenio duenio, bool estado)
         {
             InitializeComponent();
             this.duenio = duenio;
+            this.vendedor = new Vendedor();
             this.CBoxEmail.Items.Add("@yahoo.com");
             this.CBoxEmail.Items.Add("@gmail.com");
             this.CBoxEmail.Items.Add("@hotmail.com");
@@ -43,7 +45,7 @@ namespace Pascual.Christian.PPLabII
 
         private void BTGuardar_Click(object sender, EventArgs e)
         {
-            Vendedor unVendedor;
+            Vendedor unVendedor = new Vendedor();
             string cadena;
             string nombre;
             string apellido;
@@ -89,7 +91,7 @@ namespace Pascual.Christian.PPLabII
 
                 if (long.TryParse(this.TxtBoxDNI.Text, out DNI))
                 {
-                    cadena = this.duenio.ValidarNuevoEmpleado(this.duenio, nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades);
+                    cadena = this.vendedor.ValidarNuevoEmpleado(this.duenio, nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades);
                     if (string.IsNullOrWhiteSpace(cadena))
                     {
                         unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades);
@@ -179,7 +181,7 @@ namespace Pascual.Christian.PPLabII
 
         public void ModificarEmpleado() 
         {
-            Vendedor unVendedor;
+            Vendedor unVendedor = null;
             int legajo;
             string cadena;
             string nombre;
@@ -188,8 +190,6 @@ namespace Pascual.Christian.PPLabII
             string genero;
             DateTime fechaNac;
             string estado;
-            DateTime inicioActividades;
-            bool bandera = false;
             bool validacion = false;
             string dato;
             int dia;
@@ -208,7 +208,6 @@ namespace Pascual.Christian.PPLabII
             {
                 anio = 1;
             }
-            inicioActividades = DateTime.Now;
 
             if (Validaciones.Validaciones.ValidarFecha(dia, mes, anio))
             {
@@ -219,67 +218,56 @@ namespace Pascual.Christian.PPLabII
                 fechaNac = new DateTime(1, 1, 1);
             }
 
-            if (long.TryParse(this.TxtBoxDNI.Text, out DNI))
+
+            if (long.TryParse(this.TxtBoxDNI.Text, out DNI) && int.TryParse(this.TBoxLegajo.Text, out legajo))
             {
-                if (this.duenio.ComparaDNI(this.duenio, DNI)) 
+
+                if (this.vendedor.ComparaDNI(this.duenio, DNI))
                 {
-                    cadena = this.duenio.ValidarNuevoEmpleado(this.duenio, nombre, apellido, 99999999, genero, fechaNac, estado, inicioActividades);
-                }
-                else 
-                {
-                    cadena = this.duenio.ValidarNuevoEmpleado(this.duenio, nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades);
-                }
-
-                if (string.IsNullOrWhiteSpace(cadena))
-                {
-                    unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades);
-                    bandera = true;
-
-                    if (bandera == true)
-                    {
-                        long telefono = 0;
-                        string email = "NN";
-                        string domicilio = "NN";
-
-                        email = this.TxtBoxEmail.Text;
-                        domicilio = this.TxtBoxDireccion.Text;
-
-                        if (long.TryParse(this.TxtBoxTelefono.Text, out telefono))
+        
+                    unVendedor = this.vendedor.RetornarUnVendedor(this.duenio, legajo);
+                    cadena = this.vendedor.ValidarCambioDatosEmpleado(this.duenio, nombre, apellido, DNI, genero, fechaNac, estado);
+                    if (string.IsNullOrWhiteSpace(cadena)) 
+                    { 
+                        if (!(unVendedor is null))
                         {
-                            unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades, telefono);
-                        }
-                        else
-                        {
-                            unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades, telefono);
-                        }
+                              long telefono;
+                              string email = this.TxtBoxEmail.Text;
+                              string domicilio = this.TxtBoxDireccion.Text;
+                              if (!(long.TryParse(this.TxtBoxTelefono.Text, out telefono))) 
+                              {
+                                  telefono = 0;
+                              }
 
-                        if (!(string.IsNullOrWhiteSpace(email)))
-                        {
-                            unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades, telefono, email);
-                        }
-                        else
-                        {
-                            unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades, telefono, email);
-                        }
+                              if (string.IsNullOrWhiteSpace(email)) 
+                              {
+                                  email = "NN";
+                              }
 
-                        if (!(string.IsNullOrWhiteSpace(domicilio)))
-                        {
-                                unVendedor = new Vendedor(nombre, apellido, DNI, genero, fechaNac, estado, inicioActividades, telefono, email, domicilio);   
-                        }
+                              if (string.IsNullOrWhiteSpace(domicilio)) 
+                              {
+                                  domicilio = "NN";
+                              }
 
-                        if (int.TryParse(this.TBoxLegajo.Text, out legajo)) 
-                        {
-                            validacion = this.duenio.ModificarVendedor(this.duenio, unVendedor, legajo);
-                            if (validacion == true) 
+                            if (this.vendedor.ModificarVendedor(this.duenio, nombre, apellido, genero, fechaNac, telefono, email, domicilio, estado, legajo))
                             {
-                                bandera = true;
+                                validacion = true;
                             }
+
                         }
+                        else
+                        {
+                            MessageBox.Show("Error");
+                        }
+                    }
+                    else 
+                    {
+                        MessageBox.Show(cadena);
                     }
                 }
                 else
                 {
-                    MessageBox.Show(cadena);
+                    MessageBox.Show("El DNI ingresado no pertenece a ningun empleado");
                 }
 
             }
@@ -335,7 +323,7 @@ namespace Pascual.Christian.PPLabII
             {
                 if(legajo>999 && legajo < 9998) 
                 {
-                    unVendedor = this.duenio.RetornarUnVendedor(this.duenio, legajo);
+                    unVendedor = this.vendedor.RetornarUnVendedor(this.duenio, legajo);
                     if(!(unVendedor is null)) 
                     {
                         DateTime fechaNacimiento = unVendedor.GetSetFechaNacimiento;
@@ -380,7 +368,7 @@ namespace Pascual.Christian.PPLabII
                 {
                     if (legajo > 999 && legajo < 9998)
                     {
-                        unVendedor = this.duenio.RetornarUnVendedor(this.duenio, legajo);
+                        unVendedor = this.vendedor.RetornarUnVendedor(this.duenio, legajo);
                         if (!(unVendedor is null))
                         {
 

@@ -18,6 +18,7 @@ namespace Pascual.Christian.PPLabII
         private long DNI;
         public FRMCliente(Duenio duenio)
         {
+            this.unCliente = new Cliente();
             this.duenio = duenio;
             InitializeComponent();
             this.CBoxEmail.Items.Add("@yahoo.com");
@@ -31,7 +32,7 @@ namespace Pascual.Christian.PPLabII
         public FRMCliente(Duenio duenio, long DNI) : this(duenio)
         {
             this.DNI = DNI;
-            this.unCliente = this.duenio.RetornarUnCliente(this.duenio, this.DNI);
+            this.unCliente = unCliente.RetornarUnCliente(this.duenio, this.DNI);
             if (!(this.unCliente is null))
             {
                 this.TBoxNombre.Text = unCliente.GetSetNombre;
@@ -100,9 +101,9 @@ namespace Pascual.Christian.PPLabII
 
             if (long.TryParse(this.TBoxDNI.Text, out DNI))
             {
-                if (this.duenio.BuscarClienteDNI(this.duenio, DNI) && this.TBoxAltura.Visible == false)
+                if (this.unCliente.BuscarClienteDNI(this.duenio, DNI) && this.TBoxAltura.Visible == false)
                 {
-                    cadena = this.duenio.ValidarCliente(this.duenio, nombre, apellido, 99999999, genero, fechaNac);
+                    cadena = this.unCliente.ValidarCliente(this.duenio, nombre, apellido, 99999999, genero, fechaNac);
 
                     if (string.IsNullOrWhiteSpace(cadena))
                     {
@@ -142,7 +143,7 @@ namespace Pascual.Christian.PPLabII
                                 unCliente = new Cliente(nombre, apellido, DNI, genero, fechaNac, telefono,email, domicilio);
                             }
 
-                            if (this.duenio.ModificarCliente(this.duenio, unCliente, DNI)) 
+                            if (this.unCliente.ModificarCliente(this.duenio, unCliente, DNI)) 
                             {
                                 MessageBox.Show("el cliente se modifico con exito");
                                 Dispose();
@@ -156,9 +157,9 @@ namespace Pascual.Christian.PPLabII
                 }
                 else 
                 {
-                    if(!(this.duenio.BuscarClienteDNI(this.duenio, DNI))) 
+                    if(!(this.unCliente.BuscarClienteDNI(this.duenio, DNI))) 
                     {
-                        cadena = this.duenio.ValidarCliente(this.duenio, nombre, apellido, DNI, genero, fechaNac);
+                        cadena = this.unCliente.ValidarCliente(this.duenio, nombre, apellido, DNI, genero, fechaNac);
 
                         if (string.IsNullOrWhiteSpace(cadena))
                         {

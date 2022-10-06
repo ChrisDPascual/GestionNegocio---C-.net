@@ -14,9 +14,11 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMEliminarEmpleado : Form
     {
         private Duenio duenio;
+        private Vendedor vendedor;
         public FRMEliminarEmpleado(Duenio duenio)
         {
             this.duenio = duenio;
+            this.vendedor = new Vendedor();
             InitializeComponent();
         }
 
@@ -29,7 +31,7 @@ namespace Pascual.Christian.PPLabII
 
                 if (numero > 999 && numero < 9999)
                 {
-                    this.RTBoxDatosEmpleado.Text = this.duenio.MostrarUnEmpleado(numero, this.duenio);
+                    this.RTBoxDatosEmpleado.Text = this.vendedor.MostrarUnEmpleado(numero, this.duenio);
                     if (string.IsNullOrWhiteSpace(this.RTBoxDatosEmpleado.Text))
                     {
                         MessageBox.Show("Legajo inexistente");

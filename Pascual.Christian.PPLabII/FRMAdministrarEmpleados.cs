@@ -14,11 +14,12 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMAdministrarEmpleados : Form
     {
         private Duenio duenio;
+        private Vendedor vendedor;
         public FRMAdministrarEmpleados(Duenio d)
         {
             InitializeComponent();
-            this.duenio = new Duenio();
-            duenio = d;
+            this.duenio = d;
+            this.vendedor = new Vendedor();
             this.CBoxFiltro.Items.Add("activo");
             this.CBoxFiltro.Items.Add("despedido");
             this.CBoxFiltro.Items.Add("todos");
@@ -40,7 +41,7 @@ namespace Pascual.Christian.PPLabII
 
             if (!(string.IsNullOrWhiteSpace(opcion)))
             {
-                this.RBListaEmpleados.Text = this.duenio.MostrarEmpleados(opcion, this.duenio);
+                this.RBListaEmpleados.Text = this.vendedor.MostrarEmpleados(opcion, this.duenio);
                
             }
             else
@@ -58,7 +59,7 @@ namespace Pascual.Christian.PPLabII
 
               if (numero > 999 && numero < 9999)
               {
-                    this.RBListaEmpleados.Text = this.duenio.MostrarUnEmpleado(numero, this.duenio);
+                    this.RBListaEmpleados.Text = this.vendedor.MostrarUnEmpleado(numero, this.duenio);
                     if (string.IsNullOrWhiteSpace(this.RBListaEmpleados.Text))
                     {
                         MessageBox.Show("Legajo inexistente");

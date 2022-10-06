@@ -14,9 +14,11 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMVentas : Form
     {
         private Duenio duenio;
+        private Cliente unCliente;
         private List<Mercaderia> listado;
         public FRMVentas(Duenio duenio)
         {
+            this.unCliente = new Cliente();
             this.duenio = duenio;
             this.listado = new List<Mercaderia>();
             InitializeComponent();
@@ -318,7 +320,7 @@ namespace Pascual.Christian.PPLabII
 
             if (long.TryParse(this.TBoxDNICliente.Text, out DNI))
             {
-                if (this.duenio.BuscarClienteDNI(this.duenio, DNI)) 
+                if (this.unCliente.BuscarClienteDNI(this.duenio, DNI)) 
                 {
                     this.TBoxDNICliente.ReadOnly = true;
                     FRMDatosClienteEncontrado datosClienteEncontrado = new FRMDatosClienteEncontrado(this.duenio, DNI);
@@ -386,9 +388,9 @@ namespace Pascual.Christian.PPLabII
             
             if (long.TryParse(dni, out DNI)) 
             { 
-              if (d.BuscarClienteDNI(d, DNI) && !(string.IsNullOrWhiteSpace(cadena)))
+              if (this.unCliente.BuscarClienteDNI(d, DNI) && !(string.IsNullOrWhiteSpace(cadena)))
               {
-                datos = d.RetornarUnCliente(d, DNI);
+                datos = this.unCliente.RetornarUnCliente(d, DNI);
                 factura.AppendLine($"Factura\t fecha:{DateTime.Now}");
                 factura.AppendLine($"Cliente {datos.GetSetNombre} {datos.GetSetApellido} DNI: {DNI}");
                 factura.AppendLine(cadena);

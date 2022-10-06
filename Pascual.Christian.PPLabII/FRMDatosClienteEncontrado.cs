@@ -14,13 +14,15 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMDatosClienteEncontrado : Form
     {
         private Duenio duenio;
+        private Cliente unCliente;
         private long DNI;
         public FRMDatosClienteEncontrado(Duenio duenio, long DNI)
         {
+            this.unCliente = new Cliente();
             this.duenio = duenio;
             this.DNI = DNI;
             InitializeComponent();
-            this.RTBoxDatosCliente.Text = this.duenio.MostrarUnCliente(this.duenio, this.DNI);
+            this.RTBoxDatosCliente.Text = this.unCliente.MostrarUnCliente(this.duenio, this.DNI);
         }
 
         private void BTSalir_Click(object sender, EventArgs e)

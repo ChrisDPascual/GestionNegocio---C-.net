@@ -44,7 +44,10 @@ namespace Entidades_Organizacion
         #endregion
 
         #region "Geters y Setter"
-
+        public List<Cliente> GetSetListadoClientes 
+        {
+            get { return this.listaClientes; }
+        }
         public List<Mercaderia> GetListaMercaderia 
         {
             get {return this.listaMercaderia; }
@@ -238,30 +241,95 @@ namespace Entidades_Organizacion
             return validacion;
 
         }
-        
-        public bool VerificarLegajo(int numeroLegajo, Duenio v) 
-        {
-            bool retorno = false;
 
-            if(!(numeroLegajo<0 || v is null)) 
+        public bool EliminarEmpleado(Duenio d, int legajo)
+        {
+            bool validacion = false;
+
+            if (!(d is null) && legajo > 0)
             {
-                foreach (var item in v.listaVendedores)
+                foreach (var item in d.listaVendedores)
                 {
-                    if (v.GetSetDNI == item.DNI)
+                    if (legajo == item.GetLegajo)
                     {
-                        if (numeroLegajo == item)
-                        {
-                            retorno = true;
-                            break;
-                        }
+                        d.listaVendedores.Remove(item);
+                        validacion = true;
+                        break;
                     }
-                    
                 }
             }
 
-            return retorno;
+            return validacion;
         }
 
+        public bool FechaDespido(Duenio d, int legajo, DateTime fecha)
+        {
+            bool validacion = false;
+            if (!(d is null) || legajo < 0 || fecha > DateTime.Now)
+            {
+                foreach (var item in d.listaVendedores)
+                {
+                    if (legajo == item.GetLegajo)
+                    {
+                        validacion = true;
+                        item.GetSetFinActividades = fecha;
+                        item.GetSetEstado = "despedido";
+                        break;
+                    }
+                }
+            }
+            return validacion;
+        }
+        public bool ModificarVendedor(Duenio d, string nombre, string apellido, string genero, DateTime fechaNac, long telefono, string email, string domicilio, string estado, int legajo)
+        {
+            bool validacion = false;
+
+            if (!(d is null) && legajo > 0)
+            {
+                foreach (var item in d.listaVendedores)
+                {
+                    if (legajo == item.GetLegajo)
+                    {
+                        item.nombre = nombre;
+                        item.apellido = apellido;
+                        item.genero = genero;
+                        item.fechaNacimiento = fechaNac;
+                        item.telefono = telefono;
+                        item.email = email;
+                        item.domicilio = domicilio;
+                        item.GetSetEstado = estado;
+                        validacion = true;
+                        break;
+                    }
+                }
+            }
+
+            return validacion;
+        }
+
+
+
+        public int RetonarLegajoUsuario(Duenio d, string usuario)
+        {
+            int legajo = 0;
+
+            if (!(d is null || string.IsNullOrWhiteSpace(usuario)))
+            {
+                foreach (var item in d.listaVendedores)
+                {
+                    if (item.GetUsuario == usuario)
+                    {
+                        legajo = item.GetLegajo;
+                        break;
+                    }
+                }
+            }
+
+            return legajo;
+        }
+        #endregion
+
+        #region "Login"
         protected string CrearUsuario(string nombre,string apellido) 
         {
             string usuario = string.Empty;
@@ -301,7 +369,7 @@ namespace Entidades_Organizacion
                 
                 foreach (var item in d.listaVendedores) 
                 {
-                    if (usuario == item.GetUsuario)
+                    if (usuario == item.GetUsuario && item.GetSetEstado == "activo")
                     {
                         validacion = true;
                         break;
@@ -344,306 +412,6 @@ namespace Entidades_Organizacion
 
             return validacion;
         }
-
-        
-
-        public string MostrarUnEmpleado(int legajo, Duenio d) 
-        {
-            StringBuilder cadena = new StringBuilder();
-            int bandera = 0;
-            if (!(d is null) && legajo > 0 )
-            {
-                foreach (var item in d.listaVendedores)
-                {
-                    if(legajo == item.GetLegajo) 
-                    {
-                        cadena.Append($"Nombre: {item.GetSetNombre}\t");
-                        cadena.AppendLine($"Apellido: {item.GetSetApellido}");
-                        cadena.Append($"DNI: {item.GetSetDNI}\t");
-                        cadena.Append($"Genero: {item.GetSetGenero}\t");
-                        cadena.AppendLine($"Edad: {item.GetEdad(item.fechaNacimiento)}\t");
-                        cadena.Append($"Estado: {item.GetSetEstado}\t");
-                        cadena.Append($"Legajo: {item.GetLegajo}\t");
-                        cadena.AppendLine($"Telefono: {item.GetSetelefono}");
-                        cadena.Append($"email: {item.GetSetEmail}\t");
-                        cadena.AppendLine($"domicilio: {item.GetSetDomicilio}");
-                        cadena.Append("Inicio de actividades: " + item.GetSetInicioActividades.ToString("dd/MM/yyyy"));
-
-                        if (item.GetSetEstado == "despedido") 
-                        { 
-                       
-                            cadena.AppendLine("\tFecha de despido: " + item.GetSetFinActividades.ToString("dd/MM/yyyy\n"));
-                        }
-                        bandera = 1;
-                        break;
-                    }
-   
-                }
-            }
-            if(bandera == 1) 
-            {
-                return Convert.ToString(cadena);
-            }
-            else 
-            {
-                return null;
-            }
-
-        }
-
-        public string MostrarEmpleados(string filtro, Duenio d) 
-        {
-            StringBuilder cadena = new StringBuilder();
-            if(!(string.IsNullOrWhiteSpace(filtro) || d is null))
-            {
-                foreach (var item in d.listaVendedores) 
-                {
-                
-                    if(item.GetSetEstado == filtro) 
-                    {
-                        cadena.Append($"Nombre: {item.GetSetNombre}\t");
-                        cadena.AppendLine($"Apellido: {item.GetSetApellido}");
-                        cadena.Append($"DNI: {item.GetSetDNI}\t");
-                        cadena.Append($"Genero: {item.GetSetGenero}\t");
-                        cadena.AppendLine($"Edad: {item.GetEdad(item.fechaNacimiento)}\t");
-                        cadena.Append($"Estado: {item.GetSetEstado}\t");
-                        cadena.Append($"Legajo: {item.GetLegajo}\t");
-                        cadena.AppendLine($"Telefono: {item.GetSetelefono}");
-                        cadena.Append($"Email: {item.GetSetEmail}\t");
-                        cadena.AppendLine($"Domicilio: {item.GetSetDomicilio}");
-                        cadena.Append("Inicio de actividades: " + item.GetSetInicioActividades.ToString("dd/MM/yyyy"));
-
-                        if (item.GetSetEstado == "despedido")
-                        {
-
-                            cadena.AppendLine("\tFecha de despido: " + item.GetSetFinActividades.ToString("dd/MM/yyyy\n"));
-                            cadena.AppendLine();
-                            cadena.AppendLine();
-                        }
-                        else
-                        {
-                            cadena.AppendLine();
-                            cadena.AppendLine();
-                        }
-                    }
-                }
-                
-                if(filtro == "todos") 
-                {
-                    foreach (var item in d.listaVendedores)
-                    {
-
-                        cadena.Append($"Nombre: {item.GetSetNombre}\t");
-                        cadena.AppendLine($"Apellido: {item.GetSetApellido}");
-                        cadena.Append($"DNI: {item.GetSetDNI}\t");
-                        cadena.Append($"Genero: {item.GetSetGenero}\t");
-                        cadena.AppendLine($"Edad: {item.GetEdad(item.fechaNacimiento)}\t");
-                        cadena.Append($"Estado: {item.GetSetEstado}\t");
-                        cadena.Append($"Legajo: {item.GetLegajo}\t");
-                        cadena.AppendLine($"Telefono: {item.GetSetelefono}");
-                        cadena.Append($"Email: {item.GetSetEmail}\t");
-                        cadena.AppendLine($"Domicilio: {item.GetSetDomicilio}");
-                        cadena.Append("Inicio de actividades: " + item.GetSetInicioActividades.ToString("dd/MM/yyyy"));
-
-                        if (item.GetSetEstado == "despedido")
-                        {
-
-                            cadena.AppendLine("\tFecha de despido: " + item.GetSetFinActividades.ToString("dd/MM/yyyy\n"));
-                            cadena.AppendLine();
-                            cadena.AppendLine();
-                        }
-                        else 
-                        {
-                            cadena.AppendLine();
-                            cadena.AppendLine();
-                        }
-
-                    }
-                }
-            }
-
-            return Convert.ToString(cadena);
-        }
-
-        public string ValidarNuevoEmpleado(Duenio d, string nombre, string apellido, long DNI, string genero, DateTime fechaNac, string estado, DateTime inicioActividades) 
-        {
-            string cadena = string.Empty;
-            StringBuilder Error = new StringBuilder();
-            int edad;
-
-            if(string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(genero) || string.IsNullOrWhiteSpace(estado) || d is null) 
-            {
-                Error.AppendLine("Complete nombre, apellido y genero");
-            }
-
-            if(!(DNI >= 999999 && DNI <= 99999999)) 
-            {
-                Error.AppendLine("Ingrese un DNI valido");
-            }
-            else 
-            {
-                if (DNI == d.GetSetDNI) 
-                {
-                    Error.AppendLine("El DNI ya se encuentra registrado");
-                }
-                else 
-                {
-                    foreach (var item in d.listaVendedores)
-                    {
-                        if (item.GetSetDNI == DNI)
-                        {
-                            Error.AppendLine("El DNI ya se encuentra registrado");
-                            break;
-                        }
-                    }
-                }
-               
-            }
-
-            if (!(Validaciones.Validaciones.ValidarFecha(fechaNac.Day,fechaNac.Month,fechaNac.Year))) 
-            {
-                Error.AppendLine("la fecha ingresada no es valida");
-            }
-            else 
-            {
-                edad = d.GetEdad(fechaNac);
-                if (edad < 17) 
-                {
-                    Error.AppendLine("No tiene edad suficiente para trabajar");
-                }
-            }
-
-            if(inicioActividades > DateTime.Now) 
-            {
-                Error.AppendLine("No concuerda la fecha de inicio"); ;
-            }
-            cadena = Convert.ToString(Error);
-            return cadena;
-        }
-
-        public Vendedor RetornarUnVendedor(Duenio d, int legajo) 
-        {
-            Vendedor unVendedor = null;
-            if(!(d is null) && legajo > 0) 
-            {
-                foreach(var item in d.listaVendedores) 
-                {
-                    if(item.GetLegajo == legajo) 
-                    {
-                        unVendedor = item;
-                        break;
-                    }
-                }
-            }
-
-            return unVendedor;
-        }
-
-        public bool EliminarEmpleado(Duenio d, int legajo) 
-        {
-            bool validacion = false;
-
-            if (!(d is null) && legajo > 0) 
-            {
-                foreach (var item in d.listaVendedores) 
-                {
-                    if (legajo == item.GetLegajo) 
-                    {
-                        d.listaVendedores.Remove(item);
-                        validacion = true;
-                        break;
-                    }
-                }
-            }
-
-            return validacion;
-        }
-
-        public bool FechaDespido(Duenio d, int legajo, DateTime fecha) 
-        {
-            bool validacion = false;
-            if(!(d is null) || legajo<0 || fecha > DateTime.Now) 
-            {
-                foreach(var item in d.listaVendedores) 
-                {
-                    if(legajo == item.GetLegajo) 
-                    {
-                        validacion = true;
-                        item.GetSetFinActividades = fecha;
-                        item.GetSetEstado = "despedido";
-                        break;
-                    }
-                }
-            }
-            return validacion;
-        }
-        public bool ModificarVendedor(Duenio d, Vendedor v, int legajo) 
-        {
-            bool validacion = false;
-
-            if(!(d is null || v is null) && legajo > 0) 
-            {
-                foreach(var item in d.listaVendedores) 
-                {
-                    if(legajo == item.GetLegajo) 
-                    {
-                        item.nombre = v.nombre;
-                        item.apellido = v.apellido;
-                        item.DNI = v.DNI;
-                        item.genero = v.genero;
-                        item.fechaNacimiento = v.fechaNacimiento;
-                        item.telefono = v.telefono;
-                        item.email = v.email;
-                        item.domicilio = v.domicilio;
-                        item.GetSetEstado = v.GetSetEstado;
-                        item.GetSetInicioActividades = v.GetSetInicioActividades;
-                        item.GetSetFinActividades = v.GetSetFinActividades;
-                        validacion = true;
-                        break;
-                    }
-                }
-            }
-
-            return validacion;
-        }
-
-        public bool ComparaDNI(Duenio d, long DNI) 
-        {
-            bool retorno = false;
-            if(!(d is null) && DNI > 0) 
-            {
-                foreach(var item in d.listaVendedores) 
-                {
-                    if(item.GetSetDNI == DNI) 
-                    {
-                        retorno = true;
-                        break;
-                    }
-                }
-            }
-
-            return retorno;
-        }
-
-        public int RetonarLegajoUsuario(Duenio d, string usuario) 
-        {
-            int legajo = 0;
-
-            if(!(d is null || string.IsNullOrWhiteSpace(usuario)))
-            {
-                foreach(var item in d.listaVendedores) 
-                {
-                    if(item.GetUsuario == usuario) 
-                    {
-                        legajo = item.GetLegajo;
-                        break;
-                    }
-                }
-            }
-
-            return legajo;
-        }
-
         #endregion
 
         #region "Administrar mercaderia"
@@ -1034,146 +802,7 @@ namespace Entidades_Organizacion
         }
         #endregion
 
-        public bool BuscarClienteDNI(Duenio d, long DNI) 
-        {
-            bool validacion = false;
-            if(!(d is null) || DNI < 1) 
-            {
-                foreach(var item in d.listaClientes) 
-                {
-                    if(item.GetSetDNI == DNI) 
-                    {
-                        validacion = true;
-                        break;
-                    }
-                }
-            }
-            return validacion;
-        }
-        public Cliente RetornarUnCliente(Duenio d, long DNI)
-        {
-            Cliente unCliente = null;
-            if (BuscarClienteDNI(d, DNI))
-            {
-                foreach (var item in d.listaClientes)
-                {
-                    if (item.GetSetDNI == DNI)
-                    {
-                        unCliente = item;
-                        break;
-                    }
-                }
-            }
-
-            return unCliente;
-        }
-        public string MostrarUnCliente(Duenio d, long DNI)
-        {
-            StringBuilder cadena = new StringBuilder();
-            int bandera = 0;
-
-            if (BuscarClienteDNI(d, DNI))
-            {
-                foreach (var item in d.listaClientes)
-                {
-                    if (item.GetSetDNI == DNI)
-                    {
-                        cadena.AppendLine($"Nombre: {item.GetSetNombre}");
-                        cadena.AppendLine($"Apellido: {item.GetSetApellido}");
-                        cadena.AppendLine($"DNI: {item.GetSetDNI}");
-                        cadena.Append($"Sexo: {item.GetSetGenero}\t");
-                        cadena.AppendLine($"edad: {item.GetEdad(item.GetSetFechaNacimiento)}");
-                        cadena.AppendLine($"Email: {item.GetSetEmail}");
-                        cadena.AppendLine($"Direccion: {item.GetSetDomicilio}");
-                        cadena.AppendLine($"Telefono: {item.GetSetelefono}");
-                        bandera = 1;
-                        break;
-                    }
-                }
-            }
-
-            if (bandera == 1)
-            {
-                return Convert.ToString(cadena);
-            }
-            else
-            {
-                return string.Empty;
-            }
-
-        }
-
-        public string ValidarCliente(Duenio d, string nombre, string apellido, long DNI, string genero, DateTime fechaNac)
-        {
-            string cadena = string.Empty;
-            StringBuilder Error = new StringBuilder();
-            int edad;
-
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(genero)  || d is null)
-            {
-                Error.AppendLine("Complete nombre, apellido y genero");
-            }
-
-            if (!(DNI >= 999999 && DNI <= 99999999))
-            {
-                Error.AppendLine("Ingrese un DNI valido");
-            }
-            else
-            {
-                    foreach (var item in d.listaClientes)
-                    {
-                        if (item.GetSetDNI == DNI)
-                        {
-                            Error.AppendLine("El DNI ya se encuentra registrado");
-                            break;
-                        }
-                    }
-
-            }
-
-            if (!(Validaciones.Validaciones.ValidarFecha(fechaNac.Day, fechaNac.Month, fechaNac.Year)))
-            {
-                Error.AppendLine("la fecha ingresada no es valida");
-            }
-            else
-            {
-                edad = d.GetEdad(fechaNac);
-                if (edad < 17)
-                {
-                    Error.AppendLine("No tiene edad suficiente para trabajar");
-                }
-            }
-
-            cadena = Convert.ToString(Error);
-            return cadena;
-        }
-
-        public bool ModificarCliente(Duenio d, Cliente c, long DNI) 
-        {
-            bool validacion = false;
-            if(BuscarClienteDNI(d, DNI) || !(c is null)) 
-            {
-                foreach(var item in d.listaClientes) 
-                {
-                    if(DNI == item.GetSetDNI) 
-                    {
-                        item.GetSetNombre = c.GetSetNombre;
-                        item.GetSetApellido = c.GetSetApellido;
-                        item.GetSetDNI = c.GetSetDNI;
-                        item.GetSetDomicilio = c.GetSetDomicilio;
-                        item.GetSetFechaNacimiento = c.GetSetFechaNacimiento;
-                        item.GetSetGenero = c.GetSetGenero;
-                        item.GetSetEmail = c.GetSetEmail;
-                        item.GetSetelefono = c.GetSetelefono;
-                        validacion = true;
-                        break;
-                    }
-                }
-            }
-
-            return validacion;
-        }
-
+        #region "Examen"
         public int GenerarNroFactura(Duenio d)
         {
             Random numeroRandom = new Random();
@@ -1188,11 +817,11 @@ namespace Entidades_Organizacion
                     {
                         if (item.GetSetNumeroFactura == numeroFactura)
                         {
-                            numeroFactura = 1;
+                            numeroFactura = 0;
                             break;
                         }
                     }
-                } while (numeroFactura == 0);
+                } while (numeroFactura != 0);
             }
 
             return numeroFactura;
@@ -1231,7 +860,7 @@ namespace Entidades_Organizacion
 
             return promedio;
         }
+        #endregion
 
-       
     }
 }

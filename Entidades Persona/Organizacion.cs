@@ -14,6 +14,7 @@ namespace Entidades_Organizacion
         protected string domicilio;
         protected string email;
 
+
         protected Organizacion() 
         {
             this.nombre = "NN";
