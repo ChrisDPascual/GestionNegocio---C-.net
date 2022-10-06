@@ -421,6 +421,7 @@ namespace Pascual.Christian.PPLabII
             // 
             this.TBoxLegajo.Location = new System.Drawing.Point(175, 12);
             this.TBoxLegajo.Name = "TBoxLegajo";
+            this.TBoxLegajo.ReadOnly = true;
             this.TBoxLegajo.Size = new System.Drawing.Size(125, 23);
             this.TBoxLegajo.TabIndex = 40;
             // 
