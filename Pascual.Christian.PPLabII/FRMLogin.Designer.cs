@@ -37,6 +37,7 @@ namespace Pascual.Christian.PPLabII
             this.TxTBoxPassword = new System.Windows.Forms.TextBox();
             this.LblContraseña = new System.Windows.Forms.Label();
             this.LblUsuario = new System.Windows.Forms.Label();
+            this.RBContador = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // BTEntrar
@@ -140,6 +141,21 @@ namespace Pascual.Christian.PPLabII
             this.LblUsuario.TabIndex = 8;
             this.LblUsuario.Text = "Usuario:";
             // 
+            // RBContador
+            // 
+            this.RBContador.AutoSize = true;
+            this.RBContador.BackColor = System.Drawing.Color.Transparent;
+            this.RBContador.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.RBContador.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.RBContador.Location = new System.Drawing.Point(23, 108);
+            this.RBContador.Name = "RBContador";
+            this.RBContador.Size = new System.Drawing.Size(111, 19);
+            this.RBContador.TabIndex = 9;
+            this.RBContador.TabStop = true;
+            this.RBContador.Text = "Modo Contador";
+            this.RBContador.UseVisualStyleBackColor = false;
+            this.RBContador.CheckedChanged += new System.EventHandler(this.RBContador_CheckedChanged);
+            // 
             // FRMLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -148,6 +164,7 @@ namespace Pascual.Christian.PPLabII
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(527, 187);
             this.ControlBox = false;
+            this.Controls.Add(this.RBContador);
             this.Controls.Add(this.LblUsuario);
             this.Controls.Add(this.LblContraseña);
             this.Controls.Add(this.TxTBoxPassword);
@@ -180,6 +197,7 @@ namespace Pascual.Christian.PPLabII
         private System.Windows.Forms.TextBox TxTBoxPassword;
         private System.Windows.Forms.Label LblContraseña;
         private System.Windows.Forms.Label LblUsuario;
+        private System.Windows.Forms.RadioButton RBContador;
     }
 }
 

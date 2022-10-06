@@ -11,6 +11,7 @@ namespace Entidades_Organizacion
     {
         #region "Atributos"
         protected int legajo;
+        protected List<Ventas> listaDeVentas;
         private List<Vendedor> listaVendedores;
         protected List<Cliente> listaClientes;
         protected List<Mercaderia> listaMercaderia; 
@@ -26,6 +27,7 @@ namespace Entidades_Organizacion
         }
         public Duenio(string nombre, string apellido, long dni, string genero,int legajo, DateTime fecha) : base(nombre, apellido, dni, genero, fecha)
         {
+            this.listaDeVentas = new List<Ventas>();
             this.listaVendedores = new List<Vendedor>();
             this.listaClientes = new List<Cliente>();
             this.listaMercaderia = new List<Mercaderia>();
@@ -109,10 +111,35 @@ namespace Entidades_Organizacion
                     }
                 }
             }
-
             if (bandera == 0)
             {
                 d.listaVendedores.Add(v);
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator +(Duenio d, Ventas venta)
+        {
+            bool retorno = false;
+            int bandera = 0;
+
+            if (!(d is null || venta is null))
+            {
+                foreach (var item in d.listaDeVentas)
+                {
+                    if (item.GetSetNumeroFactura == venta.GetSetNumeroFactura)
+                    {
+                        bandera = 1;
+                        break;
+                    }
+                }
+            }
+
+            if (bandera == 0)
+            {
+                d.listaDeVentas.Add(venta);
                 retorno = true;
             }
 
@@ -1145,6 +1172,47 @@ namespace Entidades_Organizacion
             }
 
             return validacion;
+        }
+
+        public int GenerarNroFactura(Duenio d)
+        {
+            Random numeroRandom = new Random();
+            int numeroFactura = 0;
+
+            if (!(d is null))
+            {
+                do
+                {
+                    numeroFactura = numeroRandom.Next(111111, 999999);
+                    foreach (var item in d.listaDeVentas)
+                    {
+                        if (item.GetSetNumeroFactura == numeroFactura)
+                        {
+                            numeroFactura = 1;
+                            break;
+                        }
+                    }
+                } while (numeroFactura == 0);
+            }
+
+            return numeroFactura;
+        }
+
+        public int CantidadDeVentas(Duenio d) 
+        {
+            return d.listaDeVentas.Count;
+        }
+        public float gananciaTotales(Duenio d) 
+        {
+            float monto = 0;
+            float acumulador = 0;
+            foreach(var item in d.listaDeVentas) 
+            {
+                monto = item.GetSetTotal;
+                acumulador = acumulador + monto;
+            }
+
+            return acumulador;
         }
     }
 }

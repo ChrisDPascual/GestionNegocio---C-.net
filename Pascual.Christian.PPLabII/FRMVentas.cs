@@ -178,7 +178,9 @@ namespace Pascual.Christian.PPLabII
                         if (subtotal == 0)
                         {
                             this.TBoxTotal.Text = Convert.ToString(Math.Round(total, 2));
-                            this.RTBoxFactura.Text = cadena;    
+                            this.RTBoxFactura.Text = cadena;
+                           
+                           
                         }
                         else
                         {
@@ -186,6 +188,7 @@ namespace Pascual.Christian.PPLabII
                             total = subtotal + total;
                             this.TBoxTotal.Text = Convert.ToString(Math.Round(total, 2));
                             this.RTBoxFactura.Text = string.Concat(cadena2, cadena);
+                            
 
                         }
                         RefrescarListado(codigo);
@@ -396,6 +399,7 @@ namespace Pascual.Christian.PPLabII
 
             return factura.ToString();
         }
+
         private void BTPagar_Click(object sender, EventArgs e)
         {
             int bandera = 0;
@@ -404,6 +408,8 @@ namespace Pascual.Christian.PPLabII
             float vuelto;
             string compra;
             float recargo;
+            bool verificar;
+            int nroFactura= 0;
 
             if (float.TryParse(this.TBoxTotal.Text, out total)) 
             {
@@ -420,6 +426,13 @@ namespace Pascual.Christian.PPLabII
                                 this.TBoxVuelto.Text = Convert.ToString(Math.Round(vuelto, 2));
                                 compra = this.RTBoxFactura.Text;
                                 MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, total));
+                                this.duenio.GenerarNroFactura(this.duenio);
+                                foreach (var item in this.listado)
+                                {
+                                    Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
+                                    verificar = this.duenio + unaVenta;
+
+                                }
                                 LimpiarDatos();
 
                             }
@@ -442,6 +455,13 @@ namespace Pascual.Christian.PPLabII
                         compra = this.RTBoxFactura.Text;
                         recargo = (total * 10 / 100) + total;
                         MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, recargo));
+                        this.duenio.GenerarNroFactura(this.duenio);
+                        foreach (var item in this.listado)
+                        {
+                            Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
+                            verificar = this.duenio + unaVenta;
+
+                        }
                         LimpiarDatos();
                     }
 
@@ -450,6 +470,14 @@ namespace Pascual.Christian.PPLabII
                         bandera = 1;
                         compra = this.RTBoxFactura.Text;
                         MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, total));
+                        this.duenio.GenerarNroFactura(this.duenio);
+                        foreach (var item in this.listado)
+                        {
+                            Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
+                            verificar = this.duenio + unaVenta;
+
+                        }
+
                         LimpiarDatos();
                     }
 

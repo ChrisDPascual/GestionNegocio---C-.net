@@ -110,6 +110,16 @@ namespace Pascual.Christian.PPLabII
 
 
         }
+        bool validarContador(string user, string password) 
+        {
+            bool validar = false;
+            if(user =="ElContador" && password == "123456") 
+            {
+                validar = true;
+            }
+
+            return validar;
+        }
         public string GetUsuarioTextBox 
         {
             get {return this.TxtBoxUsuario.Text; }
@@ -160,9 +170,15 @@ namespace Pascual.Christian.PPLabII
             {
                 contador++;
             }
+
+            if (validarContador(usuario, contraseña)) 
+            {
+                FRMContador elContador = new FRMContador(this.elDueño);
+                elContador.ShowDialog();
+            }
  
 
-            if (contador == 2) 
+            if (contador == 3) 
             {
                 MessageBox.Show("Usuario o contraseña invalido");
             }
@@ -173,5 +189,10 @@ namespace Pascual.Christian.PPLabII
             Dispose();
         }
 
+        private void RBContador_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TxtBoxUsuario.Text = "ElContador";
+            this.TxTBoxPassword.Text = "123456";
+        }
     }
 }

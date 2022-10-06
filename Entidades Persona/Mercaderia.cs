@@ -8,7 +8,7 @@ using Entidades_Organizacion;
 
 namespace Entidades_Organizacion
 {
-    public sealed class Mercaderia
+    public class Mercaderia
     {
         private string articulo;
         private string marca;
