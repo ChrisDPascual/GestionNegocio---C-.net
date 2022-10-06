@@ -74,6 +74,7 @@ namespace Pascual.Christian.PPLabII
             // 
             this.RTBoxDatosEmpleado.Location = new System.Drawing.Point(180, 105);
             this.RTBoxDatosEmpleado.Name = "RTBoxDatosEmpleado";
+            this.RTBoxDatosEmpleado.ReadOnly = true;
             this.RTBoxDatosEmpleado.Size = new System.Drawing.Size(396, 80);
             this.RTBoxDatosEmpleado.TabIndex = 2;
             this.RTBoxDatosEmpleado.Text = "";
@@ -132,6 +133,7 @@ namespace Pascual.Christian.PPLabII
             this.BackgroundImage = global::Pascual.Christian.PPLabII.Properties.Resources.Alerta;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(597, 285);
+            this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.TBoxLegajo);
             this.Controls.Add(this.label2);

@@ -215,6 +215,7 @@ namespace Pascual.Christian.PPLabII
             // 
             this.TBoxFechaDespido.Location = new System.Drawing.Point(251, 92);
             this.TBoxFechaDespido.Name = "TBoxFechaDespido";
+            this.TBoxFechaDespido.ReadOnly = true;
             this.TBoxFechaDespido.Size = new System.Drawing.Size(111, 23);
             this.TBoxFechaDespido.TabIndex = 13;
             // 
@@ -222,6 +223,7 @@ namespace Pascual.Christian.PPLabII
             // 
             this.TBoxInicioActiv.Location = new System.Drawing.Point(116, 92);
             this.TBoxInicioActiv.Name = "TBoxInicioActiv";
+            this.TBoxInicioActiv.ReadOnly = true;
             this.TBoxInicioActiv.Size = new System.Drawing.Size(115, 23);
             this.TBoxInicioActiv.TabIndex = 14;
             // 
@@ -244,6 +246,7 @@ namespace Pascual.Christian.PPLabII
             this.BackgroundImage = global::Pascual.Christian.PPLabII.Properties.Resources.Alerta;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(374, 269);
+            this.ControlBox = false;
             this.Controls.Add(this.label7);
             this.Controls.Add(this.TBoxInicioActiv);
             this.Controls.Add(this.TBoxFechaDespido);

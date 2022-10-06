@@ -64,7 +64,7 @@ namespace Pascual.Christian.PPLabII
                 if (nuevaFechaDespido > this.vendedor.GetSetInicioActividades)
                 {
                     this.vendedor.GetSetFinActividades = nuevaFechaDespido;
-                    if (this.duenio.ModificarVendedor(this.duenio, this.vendedor, this.vendedor.GetLegajo))
+                    if (this.duenio.FechaDespido(this.duenio,Convert.ToInt32(this.TxBoxLegajo.Text),nuevaFechaDespido))
                     {
                         MessageBox.Show("Se modificio la fecha de despido correctamente");
                         Dispose();

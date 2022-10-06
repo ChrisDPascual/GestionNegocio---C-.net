@@ -532,6 +532,24 @@ namespace Entidades_Organizacion
             return validacion;
         }
 
+        public bool FechaDespido(Duenio d, int legajo, DateTime fecha) 
+        {
+            bool validacion = false;
+            if(!(d is null) || legajo<0 || fecha > DateTime.Now) 
+            {
+                foreach(var item in d.listaVendedores) 
+                {
+                    if(legajo == item.GetLegajo) 
+                    {
+                        validacion = true;
+                        item.GetSetFinActividades = fecha;
+                        item.GetSetEstado = "despedido";
+                        break;
+                    }
+                }
+            }
+            return validacion;
+        }
         public bool ModificarVendedor(Duenio d, Vendedor v, int legajo) 
         {
             bool validacion = false;

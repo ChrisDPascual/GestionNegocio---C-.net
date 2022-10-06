@@ -140,6 +140,7 @@ namespace Pascual.Christian.PPLabII
             // 
             // CBoxGenero
             // 
+            this.CBoxGenero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBoxGenero.FormattingEnabled = true;
             this.CBoxGenero.Location = new System.Drawing.Point(186, 137);
             this.CBoxGenero.Name = "CBoxGenero";
@@ -169,6 +170,7 @@ namespace Pascual.Christian.PPLabII
             // 
             // CBoxEstado
             // 
+            this.CBoxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBoxEstado.FormattingEnabled = true;
             this.CBoxEstado.Location = new System.Drawing.Point(496, 186);
             this.CBoxEstado.Name = "CBoxEstado";
@@ -372,6 +374,7 @@ namespace Pascual.Christian.PPLabII
             // 
             // CBoxEmail
             // 
+            this.CBoxEmail.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBoxEmail.FormattingEnabled = true;
             this.CBoxEmail.Location = new System.Drawing.Point(315, 235);
             this.CBoxEmail.Name = "CBoxEmail";
@@ -418,6 +421,7 @@ namespace Pascual.Christian.PPLabII
             // 
             this.TBoxLegajo.Location = new System.Drawing.Point(175, 12);
             this.TBoxLegajo.Name = "TBoxLegajo";
+            this.TBoxLegajo.ReadOnly = true;
             this.TBoxLegajo.Size = new System.Drawing.Size(125, 23);
             this.TBoxLegajo.TabIndex = 40;
             // 
@@ -444,6 +448,7 @@ namespace Pascual.Christian.PPLabII
             this.BackgroundImage = global::Pascual.Christian.PPLabII.Properties.Resources.Fondo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(687, 334);
+            this.ControlBox = false;
             this.Controls.Add(this.BTBuscar);
             this.Controls.Add(this.TBoxLegajo);
             this.Controls.Add(this.LBModificar);
