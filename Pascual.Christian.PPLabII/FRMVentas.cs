@@ -141,6 +141,7 @@ namespace Pascual.Christian.PPLabII
             {
                 cadena = this.RTBoxFactura.Text;
             }
+
             if(this.NUpCantidad.Value> 0 && int.TryParse(this.TBoxProducto.Text, out codigo)) 
             {
                 cantidad = Convert.ToInt32(this.NUpCantidad.Value);
@@ -152,6 +153,7 @@ namespace Pascual.Christian.PPLabII
 
                     if (!(string.IsNullOrWhiteSpace(cadena)))
                     {
+                        //REEELEER ESTOOOOO 
                         if(this.listado.Count == 0) 
                         {
                             InstanciarNuevoProducto(producto, cantidad);
@@ -170,6 +172,7 @@ namespace Pascual.Christian.PPLabII
                                     break;
                                 }
                             }
+
                             if(bandera == 0) 
                             {
                                 InstanciarNuevoProducto(producto, cantidad);
@@ -380,7 +383,7 @@ namespace Pascual.Christian.PPLabII
             this.TBoxEfectivo.Clear();
             this.TBoxEfectivo.ReadOnly = true;
         }
-        public string GenerarFactura(Duenio d, string dni, string cadena, float monto)
+        public string GenerarFactura(Duenio d, string dni,int nroFactura, string cadena, float monto)
         {
             StringBuilder factura = new StringBuilder();
             Cliente datos;
@@ -391,8 +394,8 @@ namespace Pascual.Christian.PPLabII
               if (this.unCliente.BuscarClienteDNI(d, DNI) && !(string.IsNullOrWhiteSpace(cadena)))
               {
                 datos = this.unCliente.RetornarUnCliente(d, DNI);
-                factura.AppendLine($"Factura\t fecha:{DateTime.Now}");
-                factura.AppendLine($"Cliente {datos.GetSetNombre} {datos.GetSetApellido} DNI: {DNI}");
+                factura.AppendLine($"Factura: {nroFactura}\t fecha:{DateTime.Now}\n");
+                factura.AppendLine($"Cliente {datos.GetSetNombre} {datos.GetSetApellido} DNI: {DNI}\n");
                 factura.AppendLine(cadena);
                 factura.AppendLine($"\nTotal: ${Math.Round(monto, 2)}\n");
 
@@ -427,14 +430,17 @@ namespace Pascual.Christian.PPLabII
                                 vuelto = pago - total;
                                 this.TBoxVuelto.Text = Convert.ToString(Math.Round(vuelto, 2));
                                 compra = this.RTBoxFactura.Text;
-                                MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, total));
-                                this.duenio.GenerarNroFactura(this.duenio);
+                                nroFactura=this.duenio.GenerarNroFactura(this.duenio);
+
                                 foreach (var item in this.listado)
                                 {
                                     Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
                                     verificar = this.duenio + unaVenta;
+               
 
                                 }
+                        
+                                MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text,nroFactura, compra, total));
                                 LimpiarDatos();
 
                             }
@@ -456,14 +462,14 @@ namespace Pascual.Christian.PPLabII
                         
                         compra = this.RTBoxFactura.Text;
                         recargo = (total * 10 / 100) + total;
-                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, recargo));
-                        this.duenio.GenerarNroFactura(this.duenio);
+                        nroFactura = this.duenio.GenerarNroFactura(this.duenio);
                         foreach (var item in this.listado)
                         {
                             Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
                             verificar = this.duenio + unaVenta;
 
                         }
+                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, nroFactura, compra, total));
                         LimpiarDatos();
                     }
 
@@ -471,15 +477,14 @@ namespace Pascual.Christian.PPLabII
                     {
                         bandera = 1;
                         compra = this.RTBoxFactura.Text;
-                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, compra, total));
-                        this.duenio.GenerarNroFactura(this.duenio);
+                        nroFactura = this.duenio.GenerarNroFactura(this.duenio);
                         foreach (var item in this.listado)
                         {
                             Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
                             verificar = this.duenio + unaVenta;
 
                         }
-
+                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, nroFactura, compra, total));
                         LimpiarDatos();
                     }
 

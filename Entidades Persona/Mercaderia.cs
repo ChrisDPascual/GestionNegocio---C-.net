@@ -10,12 +10,12 @@ namespace Entidades_Organizacion
 {
     public class Mercaderia
     {
-        private string articulo;
+        protected string articulo;
         private string marca;
         private int codigo;
-        private string categoria;
-        private float precio;
-        private int stock;
+        protected string categoria;
+        protected float precio;
+        protected int stock;
         private eTipoMercaderia tipo;
 
         public Mercaderia() 

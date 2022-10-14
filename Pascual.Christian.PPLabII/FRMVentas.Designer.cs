@@ -72,6 +72,7 @@ namespace Pascual.Christian.PPLabII
             this.TBoxTotal = new System.Windows.Forms.TextBox();
             this.BTBuscarDNI = new System.Windows.Forms.Button();
             this.TBoxDNICliente = new System.Windows.Forms.TextBox();
+            this.RTBoxPrueba = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUpCantidad)).BeginInit();
             this.TBBuscarPorCodigo.SuspendLayout();
@@ -602,14 +603,23 @@ namespace Pascual.Christian.PPLabII
             this.TBoxDNICliente.Size = new System.Drawing.Size(126, 23);
             this.TBoxDNICliente.TabIndex = 0;
             // 
+            // RTBoxPrueba
+            // 
+            this.RTBoxPrueba.Location = new System.Drawing.Point(658, 52);
+            this.RTBoxPrueba.Name = "RTBoxPrueba";
+            this.RTBoxPrueba.Size = new System.Drawing.Size(163, 360);
+            this.RTBoxPrueba.TabIndex = 16;
+            this.RTBoxPrueba.Text = "";
+            // 
             // FRMVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Pascual.Christian.PPLabII.Properties.Resources.Fondo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(662, 456);
+            this.ClientSize = new System.Drawing.Size(888, 456);
             this.ControlBox = false;
+            this.Controls.Add(this.RTBoxPrueba);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.TBBuscarPorCodigo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -673,5 +683,6 @@ namespace Pascual.Christian.PPLabII
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.RichTextBox RTBoxPrueba;
     }
 }

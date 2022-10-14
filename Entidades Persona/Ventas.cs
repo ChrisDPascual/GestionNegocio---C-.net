@@ -9,21 +9,20 @@ namespace Entidades_Organizacion
 {
     public  class Ventas : Mercaderia
     {
-        protected int numeroFactura;
-        protected float total;
-        protected int cantidad;
-        public Ventas(string articulo, string categoria, float precio,int cantidad) : base()
+        private int cantidad;
+        private int numeroFactura;
+        private float total;
+        public Ventas(string articulo, string categoria, float precio,int cantidad, int numeroFactura)
         {
+            this.articulo = articulo;
+            this.categoria = categoria;
+            this.precio = precio;
             this.cantidad = cantidad;
             this.total = cantidad*precio;
-        }
-
-        public Ventas(string articulo, string categoria, float precio, int cantidad, int numeroFactura) : this(articulo,categoria,precio,cantidad)
-        {
             this.numeroFactura = numeroFactura;
         }
 
-        public static bool operator +(Ventas v1, Ventas v2) 
+        public static bool operator ==(Ventas v1, Ventas v2) 
         {
             bool validacion = false;
             if( !(v1 is null || v2 is null)) 
@@ -35,6 +34,11 @@ namespace Entidades_Organizacion
             }
 
             return validacion;
+        }
+
+        public static bool operator !=(Ventas v1, Ventas v2) 
+        {
+            return !(v1 == v2);
         }
 
         public float GetSetTotal 
@@ -53,6 +57,18 @@ namespace Entidades_Organizacion
         {
             get { return this.cantidad; }
             set { this.cantidad = value; }
+        }
+
+        public string MostrarVentas(Ventas v) 
+        {
+            StringBuilder cadena = new StringBuilder();
+
+            cadena.AppendLine($"articulo {v.GetSetArticulo}");
+            cadena.AppendLine($"cantidad {v.GetSetCantidad}");
+            cadena.AppendLine($"nro factura {v.GetSetNumeroFactura}");
+            cadena.AppendLine($"total {v.GetSetTotal}");
+
+            return Convert.ToString(cadena);
         }
 
     }

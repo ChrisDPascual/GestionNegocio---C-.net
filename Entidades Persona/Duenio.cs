@@ -126,25 +126,12 @@ namespace Entidades_Organizacion
         public static bool operator +(Duenio d, Ventas venta)
         {
             bool retorno = false;
-            int bandera = 0;
 
             if (!(d is null || venta is null))
-            {
-                foreach (var item in d.listaDeVentas)
-                {
-                    if (item.GetSetNumeroFactura == venta.GetSetNumeroFactura)
-                    {
-                        bandera = 1;
-                        break;
-                    }
-                }
-            }
-
-            if (bandera == 0)
-            {
+            {         
                 d.listaDeVentas.Add(venta);
                 retorno = true;
-            }
+            }     
 
             return retorno;
         }
@@ -810,26 +797,54 @@ namespace Entidades_Organizacion
 
             if (!(d is null))
             {
-                do
+                if (d.listaDeVentas.Count > 0) 
+                {
+                    do
+                    {
+                        numeroFactura = numeroRandom.Next(111111, 999999);
+                        foreach (var item in d.listaDeVentas)
+                        {
+                            if (item.GetSetNumeroFactura == numeroFactura)
+                            {
+                                numeroFactura = 0;
+                                break;
+                            }
+                        }
+                    } while (numeroFactura == 0);
+                }
+                else 
                 {
                     numeroFactura = numeroRandom.Next(111111, 999999);
-                    foreach (var item in d.listaDeVentas)
-                    {
-                        if (item.GetSetNumeroFactura == numeroFactura)
-                        {
-                            numeroFactura = 0;
-                            break;
-                        }
-                    }
-                } while (numeroFactura != 0);
+                }
             }
 
             return numeroFactura;
         }
 
+        //reformar esto
         public int CantidadDeVentas(Duenio d) 
         {
-            return d.listaDeVentas.Count;
+            int contador = 0;
+            int nroFactura = 0;
+
+
+            if(!(d is null)) 
+            {
+                foreach(var item in d.listaDeVentas) 
+                {
+
+                        if (item.GetSetNumeroFactura != nroFactura)
+                        {
+                            nroFactura = item.GetSetNumeroFactura;
+                            contador++;
+                            break;
+                        }
+
+                    
+
+                }
+            }
+            return contador;
         }
         public float gananciaTotales(Duenio d) 
         {
