@@ -267,6 +267,7 @@ namespace Pascual.Christian.PPLabII
             // BTModificar
             // 
             this.BTModificar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BTModificar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BTModificar.FlatAppearance.BorderSize = 0;
             this.BTModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkCyan;
             this.BTModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

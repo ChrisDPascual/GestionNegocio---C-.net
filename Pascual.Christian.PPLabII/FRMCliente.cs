@@ -47,6 +47,7 @@ namespace Pascual.Christian.PPLabII
                 this.TBoxEmail.Text = unCliente.GetSetEmail;
                 this.TBoxAltura.Visible = false;
                 this.CBoxEmail.Visible = false;
+                this.TBoxDNI.ReadOnly = true;
 
             }
         }
@@ -57,6 +58,12 @@ namespace Pascual.Christian.PPLabII
             this.TBoxDNI.Text = DNI;
             this.TBoxDNI.ReadOnly = true;
             
+        }
+
+        public long GetSetDato
+        {
+            get { return this.DNI; }
+            set { this.DNI = value; }
         }
         private void BTSalir_Click(object sender, EventArgs e)
         {
@@ -145,6 +152,7 @@ namespace Pascual.Christian.PPLabII
 
                             if (this.unCliente.ModificarCliente(this.duenio, unCliente, DNI)) 
                             {
+                                GetSetDato = this.DNI;
                                 MessageBox.Show("el cliente se modifico con exito");
                                 Dispose();
                             }
@@ -152,7 +160,7 @@ namespace Pascual.Christian.PPLabII
                     }
                     else
                     {
-                        MessageBox.Show(cadena);
+                        MessageBox.Show(cadena + "\nNo se pudieron realizar los cambios");
                     }
                 }
                 else 
@@ -201,6 +209,7 @@ namespace Pascual.Christian.PPLabII
 
                                 if (this.duenio+unCliente)
                                 {
+                                    GetSetDato = DNI;
                                     MessageBox.Show("el cliente se creo con exito");
                                     Dispose();
                                 }
@@ -208,7 +217,7 @@ namespace Pascual.Christian.PPLabII
                         }
                         else
                         {
-                            MessageBox.Show(cadena);
+                            MessageBox.Show(cadena + "\nNo se logro crear el cliente");
                         }
                     }
                     else 

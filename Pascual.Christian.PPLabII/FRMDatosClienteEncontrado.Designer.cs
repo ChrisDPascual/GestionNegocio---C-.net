@@ -34,6 +34,7 @@ namespace Pascual.Christian.PPLabII
             this.BTSalir = new System.Windows.Forms.Button();
             this.BTModificar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.TBoxConfirmar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // RTBoxDatosCliente
@@ -52,9 +53,9 @@ namespace Pascual.Christian.PPLabII
             this.BTSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTSalir.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BTSalir.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.BTSalir.Location = new System.Drawing.Point(120, 173);
+            this.BTSalir.Location = new System.Drawing.Point(86, 173);
             this.BTSalir.Name = "BTSalir";
-            this.BTSalir.Size = new System.Drawing.Size(91, 32);
+            this.BTSalir.Size = new System.Drawing.Size(69, 32);
             this.BTSalir.TabIndex = 1;
             this.BTSalir.Text = "Salir";
             this.BTSalir.UseVisualStyleBackColor = false;
@@ -68,11 +69,11 @@ namespace Pascual.Christian.PPLabII
             this.BTModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTModificar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BTModificar.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.BTModificar.Location = new System.Drawing.Point(217, 173);
+            this.BTModificar.Location = new System.Drawing.Point(161, 173);
             this.BTModificar.Name = "BTModificar";
-            this.BTModificar.Size = new System.Drawing.Size(91, 32);
+            this.BTModificar.Size = new System.Drawing.Size(69, 32);
             this.BTModificar.TabIndex = 2;
-            this.BTModificar.Text = "Modificar";
+            this.BTModificar.Text = "Cambiar";
             this.BTModificar.UseVisualStyleBackColor = false;
             this.BTModificar.Click += new System.EventHandler(this.BTModificar_Click);
             // 
@@ -88,6 +89,23 @@ namespace Pascual.Christian.PPLabII
             this.label1.TabIndex = 4;
             this.label1.Text = "Datos Cliente";
             // 
+            // TBoxConfirmar
+            // 
+            this.TBoxConfirmar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.TBoxConfirmar.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.TBoxConfirmar.FlatAppearance.BorderSize = 0;
+            this.TBoxConfirmar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkCyan;
+            this.TBoxConfirmar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TBoxConfirmar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.TBoxConfirmar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.TBoxConfirmar.Location = new System.Drawing.Point(236, 173);
+            this.TBoxConfirmar.Name = "TBoxConfirmar";
+            this.TBoxConfirmar.Size = new System.Drawing.Size(69, 32);
+            this.TBoxConfirmar.TabIndex = 5;
+            this.TBoxConfirmar.Text = "Usar";
+            this.TBoxConfirmar.UseVisualStyleBackColor = false;
+            this.TBoxConfirmar.Click += new System.EventHandler(this.TBoxConfirmar_Click);
+            // 
             // FRMDatosClienteEncontrado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -96,6 +114,7 @@ namespace Pascual.Christian.PPLabII
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(330, 221);
             this.ControlBox = false;
+            this.Controls.Add(this.TBoxConfirmar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BTModificar);
             this.Controls.Add(this.BTSalir);
@@ -118,5 +137,6 @@ namespace Pascual.Christian.PPLabII
         private System.Windows.Forms.Button BTSalir;
         private System.Windows.Forms.Button BTModificar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button TBoxConfirmar;
     }
 }

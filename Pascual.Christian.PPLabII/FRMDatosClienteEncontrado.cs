@@ -25,6 +25,12 @@ namespace Pascual.Christian.PPLabII
             this.RTBoxDatosCliente.Text = this.unCliente.MostrarUnCliente(this.duenio, this.DNI);
         }
 
+        public long GetSetDato 
+        {
+            get {return this.DNI; }
+            set {this.DNI = value; }
+        }
+
         private void BTSalir_Click(object sender, EventArgs e)
         {
             Dispose();
@@ -32,8 +38,18 @@ namespace Pascual.Christian.PPLabII
 
         private void BTModificar_Click(object sender, EventArgs e)
         {
+            long DNI;
             FRMCliente datosCliente = new FRMCliente(this.duenio, this.DNI);
-            datosCliente.ShowDialog();
+            if(datosCliente.ShowDialog() == DialogResult.OK) 
+            {
+                DNI = datosCliente.GetSetDato;
+                this.RTBoxDatosCliente.Text = this.unCliente.MostrarUnCliente(this.duenio, DNI);
+            }
+        }
+
+        private void TBoxConfirmar_Click(object sender, EventArgs e)
+        {
+            GetSetDato = this.DNI;
             Dispose();
         }
     }

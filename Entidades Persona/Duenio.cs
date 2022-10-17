@@ -821,31 +821,27 @@ namespace Entidades_Organizacion
             return numeroFactura;
         }
 
-        //reformar esto
-        public int CantidadDeVentas(Duenio d) 
+        public long CantidadDeVentas(Duenio d)
         {
-            int contador = 0;
-            int nroFactura = 0;
 
+            List<long> ventas = new List<long>();
 
-            if(!(d is null)) 
+            if (!(d is null))
             {
-                foreach(var item in d.listaDeVentas) 
+                foreach (var item in d.listaDeVentas)
                 {
-
-                        if (item.GetSetNumeroFactura != nroFactura)
-                        {
-                            nroFactura = item.GetSetNumeroFactura;
-                            contador++;
-                            break;
-                        }
-
-                    
-
+                   ventas.Add(item.GetSetNumeroFactura);
                 }
+
+                var facturas = new HashSet<long>(ventas);
+
+                return facturas.Count;
+
             }
-            return contador;
+
+            return 0;
         }
+  
         public float gananciaTotales(Duenio d) 
         {
             float monto = 0;

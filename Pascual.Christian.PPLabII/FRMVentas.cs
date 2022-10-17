@@ -153,7 +153,7 @@ namespace Pascual.Christian.PPLabII
 
                     if (!(string.IsNullOrWhiteSpace(cadena)))
                     {
-                        //REEELEER ESTOOOOO 
+                      
                         if(this.listado.Count == 0) 
                         {
                             InstanciarNuevoProducto(producto, cantidad);
@@ -323,30 +323,62 @@ namespace Pascual.Christian.PPLabII
 
             if (long.TryParse(this.TBoxDNICliente.Text, out DNI))
             {
-                if (this.unCliente.BuscarClienteDNI(this.duenio, DNI)) 
+                if ((DNI > 99999999 || DNI < 1000000) && !(string.IsNullOrWhiteSpace(this.TBoxDNICliente.Text)))
                 {
-                    this.TBoxDNICliente.ReadOnly = true;
-                    FRMDatosClienteEncontrado datosClienteEncontrado = new FRMDatosClienteEncontrado(this.duenio, DNI);
-                    datosClienteEncontrado.ShowDialog();
+                    MessageBox.Show("Ingrese un DNI valido");
                 }
                 else
                 {
-                    if ((DNI > 99999999 || DNI < 99999) && !(string.IsNullOrWhiteSpace(this.TBoxDNICliente.Text)))
-                    {
-                        MessageBox.Show("Ingrese un DNI valido");
+                    if (this.unCliente.BuscarClienteDNI(this.duenio, DNI)) 
+                    { 
+                        FRMDatosClienteEncontrado datosClienteEncontrado = new FRMDatosClienteEncontrado(this.duenio, DNI);
+                        
+                        if (datosClienteEncontrado.ShowDialog() == DialogResult.OK)
+                        {
+                            this.TBoxDNICliente.ReadOnly = true;
+                            this.RBTClienteGenerico.Enabled = false;
+                        }
+                        else
+                        {
+
+                            this.RBTClienteGenerico.Enabled = true;
+                            this.RBTClienteGenerico.Checked = false;
+                            this.TBoxDNICliente.ReadOnly = false;
+                            this.TBoxDNICliente.Clear();
+                        }
                     }
                     else 
                     {
                         respuesta = Convert.ToString(MessageBox.Show($"El cliente no se encuentra registrado, desea añadirlo a la base de datos", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Question));
-                        if(respuesta == "Yes") 
+                        if (respuesta == "Yes")
                         {
-                            this.TBoxDNICliente.ReadOnly = true;
-                            FRMCliente nuevoCliente = new FRMCliente(this.duenio,this.TBoxDNICliente.Text);
-                            nuevoCliente.ShowDialog();
-                        }
+                            FRMCliente nuevoCliente = new FRMCliente(this.duenio, this.TBoxDNICliente.Text);
+                            if (nuevoCliente.ShowDialog() == DialogResult.OK) 
+                            {
+                                this.TBoxDNICliente.Text = Convert.ToString(nuevoCliente.GetSetDato);
+                                if(this.TBoxDNICliente.Text != "0") 
+                                {
+                                    this.RBTClienteGenerico.Enabled = false;
+                                    this.TBoxDNICliente.ReadOnly = true;
+                                }
+                                else 
+                                {
+                                    this.RBTClienteGenerico.Enabled = true;
+                                    this.RBTClienteGenerico.Checked = false;
+                                    this.TBoxDNICliente.ReadOnly = false;
+                                    this.TBoxDNICliente.Clear();
+                                }
 
+                            }
+
+                        }
                     }
+                  
                 }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un DNI");
             }
         }
 
@@ -363,9 +395,10 @@ namespace Pascual.Christian.PPLabII
 
         public void LimpiarDatos() 
         {
-            
+            this.RBTClienteGenerico.Enabled = true;
+            this.RBTClienteGenerico.Checked = false;
+            this.TBoxDNICliente.Clear();
             this.TBoxDNICliente.ReadOnly = false;
-            this.TBoxDNICliente.Text = string.Empty;
             this.TBoxProducto.Clear();
             this.TBoxBuscarPorCodigo.Clear();
             this.RTBoxFactura.Clear();
@@ -375,7 +408,7 @@ namespace Pascual.Christian.PPLabII
             this.TBoxVuelto.Clear();
             this.NUpCantidad.Value = 0;
             this.listado.Clear();
-            this.RBTClienteGenerico.Checked = false;
+            
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -458,18 +491,19 @@ namespace Pascual.Christian.PPLabII
 
                     if (this.RBCredito.Checked)
                     {
+                        float interesPorCredito = 0;
                         bandera = 1;
-                        
                         compra = this.RTBoxFactura.Text;
                         recargo = (total * 10 / 100) + total;
                         nroFactura = this.duenio.GenerarNroFactura(this.duenio);
                         foreach (var item in this.listado)
                         {
-                            Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, item.GetSetPrecio, item.GetSetStock, nroFactura);
+                            interesPorCredito = item.GetSetPrecio * 10 / 100;
+                            Ventas unaVenta = new Ventas(item.GetSetArticulo, item.GetSetCategoria, (item.GetSetPrecio+interesPorCredito), item.GetSetStock, nroFactura);
                             verificar = this.duenio + unaVenta;
 
                         }
-                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, nroFactura, compra, total));
+                        MessageBox.Show(GenerarFactura(this.duenio, this.TBoxDNICliente.Text, nroFactura, compra, recargo));
                         LimpiarDatos();
                     }
 
