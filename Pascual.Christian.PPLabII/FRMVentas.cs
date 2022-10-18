@@ -407,6 +407,9 @@ namespace Pascual.Christian.PPLabII
             this.TBoxTotal.Clear();
             this.TBoxVuelto.Clear();
             this.NUpCantidad.Value = 0;
+            this.RBDebito.Checked = false;
+            this.RBCredito.Checked = false;
+            this.RBEfectivo.Checked = false;
             this.listado.Clear();
             
         }

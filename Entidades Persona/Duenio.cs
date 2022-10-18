@@ -862,14 +862,106 @@ namespace Entidades_Organizacion
             float acumulador= 0;
 
             foreach(var item in d.listaDeVentas)
-            { 
-                precio = item.GetSetPrecio;
-                acumulador = acumulador + precio;
+            {
+                if (item.GetSetCategoria == categoria) 
+                {
+                    precio = item.GetSetTotal;
+                    acumulador = acumulador + precio; 
+                }
             }
 
-            promedio = acumulador / d.listaDeVentas.Count;
+            promedio = (acumulador/gananciaTotales(d))*100;
 
             return promedio;
+        }
+        private int CompararString(Ventas v1, Ventas v2)
+        {
+
+            if ((v1.GetSetArticulo.CompareTo(v2.GetSetArticulo)) == 0)
+            {
+                v1.GetSetCantidad = v1.GetSetCantidad + v2.GetSetCantidad;
+                v1.GetSetTotal = v1.GetSetTotal + v2.GetSetTotal;
+                v2.GetSetArticulo = "vacio";
+                v2.GetSetCantidad = 0;
+                return 0;
+            }
+            else
+            {
+                return v1.GetSetArticulo.CompareTo(v2.GetSetArticulo);
+            }
+
+        }
+
+        private bool BorrarVacio(Ventas v)
+        {
+            bool retorno = false;
+
+            if (v.GetSetArticulo == "vacio")
+            {
+                retorno = true;
+            }
+            return retorno;
+        }
+
+        private int RetornarCodigoMercaderia(Duenio d, Ventas v) 
+        {
+            int codigo = 0;
+
+            if(!(d is null || v is null)) 
+            {
+                foreach(var item in d.listaMercaderia) 
+                {
+                    if(item.GetSetArticulo == v.GetSetArticulo) 
+                    {
+                        codigo = item.GetCodigo;
+                        break;
+                    }
+                }
+            }
+            
+
+            return codigo;
+        }
+
+        public string ProductoMasVendidoPorCategoria(Duenio d, string categoria) 
+        {
+            List<Ventas> articulosVendidos = new List<Ventas>();
+            int max = 0;
+            StringBuilder cadena = new StringBuilder();
+
+
+            if (!(d is null || string.IsNullOrWhiteSpace(categoria)))
+            {
+                foreach (var item in d.listaDeVentas)
+                {
+                    if (item.GetSetCategoria == categoria)
+                    {
+                        articulosVendidos.Add(item);
+
+                    }
+                }
+
+                articulosVendidos.Sort(CompararString);
+                articulosVendidos.RemoveAll(BorrarVacio);
+
+                foreach(var item in articulosVendidos) 
+                {
+                    if (item.GetSetCantidad > max) 
+                    {
+                        cadena.Clear();
+                        max = item.GetSetCantidad;
+                        cadena.AppendLine($"articulo: {item.GetSetArticulo}");
+                        cadena.AppendLine($"codigo: {RetornarCodigoMercaderia(d,item)}");
+                        cadena.AppendLine($"cantidad vendida: {max}");
+                        cadena.AppendLine($"precio unitario: {Math.Round(item.GetSetPrecio,2)}");
+                        cadena.AppendLine($"acumulado: {Math.Round(item.GetSetTotal,2)}");
+                    }
+                }
+
+            }
+            articulosVendidos.Clear();
+
+            return Convert.ToString(cadena);
         }
         #endregion
 
