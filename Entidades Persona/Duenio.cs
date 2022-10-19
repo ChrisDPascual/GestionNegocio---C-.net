@@ -536,22 +536,49 @@ namespace Entidades_Organizacion
 
         }
 
+        public bool ComprarProductoProv(Duenio d, Proveedor p, int codigo, int cantidad)
+        {
+            bool retorno = false;
+            int stock = 0;
+            int total = 0;
+
+            if(!(d is null || p is null) && cantidad > 0)
+            {
+                foreach(var item in d.listaMercaderia) 
+                {
+                    if (p.ComprarMercaderia(p, codigo, cantidad)) 
+                    {
+                        stock = item.GetSetStock;
+                        total = stock + cantidad;
+                        item.GetSetStock = total;
+                        if (ModificarUnProducto(d, item))
+                        {
+                            retorno = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return retorno;
+        }
+
         public bool ComprarProducto(Duenio d, int codigo, int cantidad)
         {
             bool retorno = false;
             int stock = 0;
             int total = 0;
 
-            if(!(d is null) && cantidad > 0)
+            if (!(d is null) && cantidad > 0)
             {
-                foreach(var item in d.listaMercaderia) 
+                foreach (var item in d.listaMercaderia)
                 {
-                    if(codigo == item.GetCodigo) 
+                    if (codigo == item.GetCodigo)
                     {
                         stock = item.GetSetStock;
                         total = stock + cantidad;
                         item.GetSetStock = total;
-                        if(ModificarUnProducto(d, item)) 
+                        if (ModificarUnProducto(d, item))
                         {
                             retorno = true;
                             break;

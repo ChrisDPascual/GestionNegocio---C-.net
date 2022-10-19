@@ -176,5 +176,29 @@ namespace Entidades_Organizacion
             Mercaderia Articulo = new Mercaderia("procesador ryzen 5","amd" ,1966111, "procesadores", eTipoMercaderia.Gaming, 61099, 0);
             return Articulo;
         }
+
+        public static Mercaderia SobrecargaMercaderia21()
+        {
+            Mercaderia Articulo = new Mercaderia("procesador ryzen 5", "amd", 1966111, "procesadores", eTipoMercaderia.Gaming, 61099, 4);
+            return Articulo;
+        }
+
+        public static Mercaderia SobrecargaMercaderia22()
+        {
+            Mercaderia Articulo = new Mercaderia("memoria ram vyper 16gb", "patriot", 1100663, "memorias ram", eTipoMercaderia.Gaming, 21999, 6);
+            return Articulo;
+        }
+
+        public static Mercaderia SobrecargaMercaderia23()
+        {
+            Mercaderia Articulo = new Mercaderia("windows 10", "windows", 1966113, "software", eTipoMercaderia.Generico, 5000, 11);
+            return Articulo;
+        }
+
+        public static Mercaderia SobrecargaMercaderia24()
+        {
+            Mercaderia Articulo = new Mercaderia("impresora", "hp", 1177119, "perifericos", eTipoMercaderia.Diseño, 29999, 14);
+            return Articulo;
+        }
     }
 }

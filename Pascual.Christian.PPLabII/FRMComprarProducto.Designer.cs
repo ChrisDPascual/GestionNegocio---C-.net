@@ -43,9 +43,19 @@ namespace Pascual.Christian.PPLabII
             // NUpStock
             // 
             this.NUpStock.Location = new System.Drawing.Point(398, 182);
+            this.NUpStock.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.NUpStock.Name = "NUpStock";
             this.NUpStock.Size = new System.Drawing.Size(71, 23);
             this.NUpStock.TabIndex = 0;
+            this.NUpStock.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // RBMostrarProducto
             // 

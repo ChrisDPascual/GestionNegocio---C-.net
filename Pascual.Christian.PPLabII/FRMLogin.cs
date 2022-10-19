@@ -15,6 +15,8 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMLogin : Form
     {
         private Duenio elDueño = new Duenio();
+        private Proveedor Prov1 = new Proveedor("El rincon gamer", 2343556);
+        private Proveedor Prov2 = new Proveedor("Mercado tecno", 5465414);
         private Vendedor Vendedor1;
         private Vendedor Vendedor2;
         private Vendedor Vendedor3;
@@ -39,6 +41,10 @@ namespace Pascual.Christian.PPLabII
         private Mercaderia articulo18;
         private Mercaderia articulo19;
         private Mercaderia articulo20;
+        private Mercaderia articulo21;
+        private Mercaderia articulo22;
+        private Mercaderia articulo23;
+        private Mercaderia articulo24;
         private Cliente cliente1;
         private Cliente cliente2;
         private Cliente cliente3;
@@ -78,6 +84,10 @@ namespace Pascual.Christian.PPLabII
             this.cliente2 = Sobrecargas.Cliente2();
             this.cliente3 = Sobrecargas.Cliente3();
             this.cliente4 = Sobrecargas.Cliente4();
+            this.articulo21 = Sobrecargas.SobrecargaMercaderia21();
+            this.articulo22 = Sobrecargas.SobrecargaMercaderia22();
+            this.articulo23 = Sobrecargas.SobrecargaMercaderia23();
+            this.articulo24 = Sobrecargas.SobrecargaMercaderia24();
 
             validacion = this.elDueño + this.Vendedor1;
             validacion = this.elDueño + this.Vendedor2;
@@ -107,6 +117,10 @@ namespace Pascual.Christian.PPLabII
             validacion = this.elDueño + this.cliente2;
             validacion = this.elDueño + this.cliente3;
             validacion = this.elDueño + this.cliente4;
+            validacion = this.Prov1 + this.articulo21;
+            validacion = this.Prov1 + this.articulo22;
+            validacion = this.Prov2 + this.articulo23;
+            validacion = this.Prov2 + this.articulo24;
 
 
         }
@@ -153,7 +167,7 @@ namespace Pascual.Christian.PPLabII
 
             if(this.elDueño.VerificarUsuarioJefe(this.elDueño,usuario,contraseña)) 
             {
-                FRMMenuJefe menuJefe = new FRMMenuJefe(this.elDueño);
+                FRMMenuJefe menuJefe = new FRMMenuJefe(this.elDueño, this.Prov1,this.Prov2);
                 menuJefe.ShowDialog();
             }
             else 

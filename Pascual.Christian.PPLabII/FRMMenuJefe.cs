@@ -14,11 +14,18 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMMenuJefe : Form
     {
         private Duenio duenio;
-        public FRMMenuJefe(Duenio d)
+        private Proveedor prov1;
+        private Proveedor prov2;
+        public FRMMenuJefe(Duenio d, Proveedor p1, Proveedor p2)
         {
-            InitializeComponent();
             this.duenio = new Duenio();
             this.duenio = d;
+            this.prov1 = new Proveedor();
+            this.prov1 = p1;
+            this.prov2 = new Proveedor();
+            this.prov2 = p2;
+            InitializeComponent();
+ 
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,7 +42,7 @@ namespace Pascual.Christian.PPLabII
 
         private void button3_Click(object sender, EventArgs e)
         {
-            FRMStock inventario = new FRMStock(this.duenio);
+            FRMStock inventario = new FRMStock(this.duenio,this.prov1,this.prov2);
             inventario.ShowDialog();
         }
 

@@ -15,18 +15,44 @@ namespace Pascual.Christian.PPLabII
     {
         private Duenio duenio;
         private int codigo;
+        private Proveedor prov1;
+        private Proveedor prov2;
+        private bool modo;
+        private string nombreProv;
 
-        public FRMComprarProducto(Duenio duenio, int codigo)
+        public FRMComprarProducto(Duenio duenio, Proveedor p1, Proveedor p2, int codigo)
         {
+            this.nombreProv = string.Empty;
             this.duenio = duenio;
             this.codigo = codigo;
+            this.prov1 = p1;
+            this.prov2 = p2;
+            nombreProv = prov1.buscarNombreProveedor(codigo);
+
             InitializeComponent();
             this.RBMostrarProducto.Text = this.duenio.MostrarUnProducto(duenio, codigo);
-            this.CBoxProveedores.Items.Add("Dunder Mifflin");
-            this.CBoxProveedores.Items.Add("Compu mundo hiper mega red");
-            this.CBoxProveedores.Items.Add("Soluciones tecnologicas");
-            this.CBoxProveedores.Items.Add("El rincon gamer");
-            this.CBoxProveedores.Items.Add("Mercado tecno");
+
+            if(!(string.IsNullOrEmpty(nombreProv)))
+            {
+                this.CBoxProveedores.Items.Add(nombreProv);
+                this.modo = true;
+            }
+            else 
+            {
+                nombreProv = prov2.buscarNombreProveedor(codigo);
+                if (!(string.IsNullOrEmpty(nombreProv))) 
+                {
+                    this.CBoxProveedores.Items.Add(nombreProv);
+                    this.modo = true;
+                }
+                else 
+                {
+                    this.CBoxProveedores.Items.Add("Otro");
+                    this.modo = false;
+                }
+                   
+            }
+     
 
         }
 
@@ -48,14 +74,29 @@ namespace Pascual.Christian.PPLabII
                 respuesta = Convert.ToString(MessageBox.Show("Desea realizar la compra?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question));
                 if (respuesta == "Yes")
                 {
-                    if (this.duenio.ComprarProducto(this.duenio, this.codigo, cantidad))
+                    if (this.modo == true)
                     {
-                        MessageBox.Show("Se compro exitosamente la mercaderia");
-                        this.RBMostrarProducto.Text = this.duenio.MostrarUnProducto(this.duenio, this.codigo);
+                        if (this.duenio.ComprarProductoProv(this.duenio, prov1, this.codigo, cantidad) || this.duenio.ComprarProductoProv(this.duenio, prov2, this.codigo, cantidad))
+                        {
+                            MessageBox.Show("Se compro exitosamente la mercaderia");
+                            this.RBMostrarProducto.Text = this.duenio.MostrarUnProducto(this.duenio, this.codigo);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo comprar");
+                        }
                     }
-                    else
+                    else 
                     {
-                        MessageBox.Show("No se pudo comprar");
+                        if (this.duenio.ComprarProducto(this.duenio, this.codigo, cantidad))
+                        {
+                            MessageBox.Show("Se compro exitosamente la mercaderia");
+                            this.RBMostrarProducto.Text = this.duenio.MostrarUnProducto(this.duenio, this.codigo);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo comprar");
+                        }
                     }
                 }
             }

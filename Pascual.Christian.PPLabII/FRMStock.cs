@@ -14,11 +14,17 @@ namespace Pascual.Christian.PPLabII
     public partial class FRMStock : Form
     {
         private Duenio duenio;
-        public FRMStock(Duenio duenio)
+        private Proveedor prov1;
+        private Proveedor prov2;
+        public FRMStock(Duenio duenio, Proveedor p1, Proveedor p2)
         {
             
             this.duenio = duenio;
             string[] categorias = this.duenio.RetornarCategoria(duenio);
+            this.prov1 = new Proveedor();
+            this.prov1 = p1;
+            this.prov2 = new Proveedor();
+            this.prov2 = p2;
             InitializeComponent();
             this.CBoxFiltrarTipo.Items.Clear();
             this.CBoxFiltroCategoria.Items.Clear();
@@ -206,7 +212,7 @@ namespace Pascual.Christian.PPLabII
             int codigo;
             if (this.TboxCodigoIngresado.ReadOnly == true && int.TryParse(this.TboxCodigoIngresado.Text, out codigo))
             {
-                FRMComprarProducto comprarProducto = new FRMComprarProducto(this.duenio, codigo);
+                FRMComprarProducto comprarProducto = new FRMComprarProducto(this.duenio,this.prov1,this.prov2, codigo);
                 comprarProducto.ShowDialog();
             }
             else
