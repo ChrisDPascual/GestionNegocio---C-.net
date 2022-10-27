@@ -539,8 +539,7 @@ namespace Entidades_Organizacion
         public bool ComprarProductoProv(Duenio d, Proveedor p, int codigo, int cantidad)
         {
             bool retorno = false;
-            int stock = 0;
-            int total = 0;
+
 
             if(!(d is null || p is null) && cantidad > 0)
             {
@@ -548,10 +547,7 @@ namespace Entidades_Organizacion
                 {
                     if (p.ComprarMercaderia(p, codigo, cantidad)) 
                     {
-                        stock = item.GetSetStock;
-                        total = stock + cantidad;
-                        item.GetSetStock = total;
-                        if (ModificarUnProducto(d, item))
+                        if (d.ComprarProducto(d, codigo, cantidad))
                         {
                             retorno = true;
                             break;
