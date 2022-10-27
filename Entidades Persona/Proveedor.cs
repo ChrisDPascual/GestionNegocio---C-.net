@@ -88,6 +88,7 @@ namespace Entidades_Organizacion
                     {
                         if (item.GetSetStock >= cantidad)
                         {
+                            item.GetSetStock = item.GetSetStock - cantidad;
                             retorno = true;
                             break;
                         }
@@ -113,6 +114,27 @@ namespace Entidades_Organizacion
             
 
             return retorno;
+        }
+
+        public string mostraListado(Proveedor p) 
+        {
+            StringBuilder listado = new StringBuilder();
+
+            if(!(p is null)) 
+            {
+                foreach (var item in p.GetListaProveedor)
+                {
+                    listado.AppendLine($"articulo: {item.GetSetArticulo}");
+                    listado.AppendLine($"codigo: {item.GetCodigo}");
+                    listado.AppendLine($"stock: {item.GetSetStock}\n");
+                }
+            }
+            else 
+            {
+                return string.Empty;
+            }
+
+            return Convert.ToString(listado);
         }
     }
 }

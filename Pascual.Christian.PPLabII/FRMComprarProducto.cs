@@ -36,6 +36,8 @@ namespace Pascual.Christian.PPLabII
             {
                 this.CBoxProveedores.Items.Add(nombreProv);
                 this.modo = true;
+                this.RTBoxProveedores.Visible = true;
+                this.RTBoxProveedores.Text = prov1.mostraListado(prov1);
             }
             else 
             {
@@ -44,15 +46,20 @@ namespace Pascual.Christian.PPLabII
                 {
                     this.CBoxProveedores.Items.Add(nombreProv);
                     this.modo = true;
+                    this.RTBoxProveedores.Visible = true;
+                    this.RTBoxProveedores.Text = prov2.mostraListado(prov2);
                 }
                 else 
                 {
+                    this.RTBoxProveedores.Visible = false;
                     this.CBoxProveedores.Items.Add("Otro");
                     this.modo = false;
                 }
                    
             }
-     
+
+            
+
 
         }
 

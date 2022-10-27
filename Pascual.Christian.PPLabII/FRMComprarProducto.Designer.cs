@@ -37,6 +37,9 @@ namespace Pascual.Christian.PPLabII
             this.CBoxProveedores = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.RTBoxProveedores = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NUpStock)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,17 +144,53 @@ namespace Pascual.Christian.PPLabII
             this.label3.TabIndex = 9;
             this.label3.Text = "Cantidad";
             // 
+            // RTBoxProveedores
+            // 
+            this.RTBoxProveedores.Location = new System.Drawing.Point(499, 32);
+            this.RTBoxProveedores.Name = "RTBoxProveedores";
+            this.RTBoxProveedores.ReadOnly = true;
+            this.RTBoxProveedores.Size = new System.Drawing.Size(240, 253);
+            this.RTBoxProveedores.TabIndex = 10;
+            this.RTBoxProveedores.Text = "";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label4.Location = new System.Drawing.Point(166, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(126, 20);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Detalle producto";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label5.Location = new System.Drawing.Point(499, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(123, 20);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Stock Proveedor";
+            // 
             // FRMComprarProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Pascual.Christian.PPLabII.Properties.Resources.Alerta;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(506, 307);
+            this.ClientSize = new System.Drawing.Size(765, 307);
             this.ControlBox = false;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.RTBoxProveedores);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CBoxProveedores);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BTSalir);
             this.Controls.Add(this.BTComprar);
@@ -177,5 +216,8 @@ namespace Pascual.Christian.PPLabII
         private System.Windows.Forms.ComboBox CBoxProveedores;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox RTBoxProveedores;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
